@@ -1,0 +1,19 @@
+image: java:latest
+
+stages:
+  - test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+run_scripts:
+  stage: test
+  script:
+    - bundle install
+    - bundle exec cucumber
+    - mvn $MAVEN_OPTS clean package
+    - mvn compile test
+    -
+  artifacts:
+    paths:
+      - results/
